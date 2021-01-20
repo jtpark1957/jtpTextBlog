@@ -47,14 +47,9 @@
         messageTextArea.value += message.data;	
         divTextArea.innerHTML += message.data;	
       };	
-    function test() {
-    	console.log("asdasd");
-    }
     function sendMessage(msg) {
       var message = document.getElementById("textMessage");		
-      console.log(msg);
       if(msg != null) {
-      	console.log("asdasd");
       	message.value += msg;
       }
       messageTextArea.value += "cmd) "+message.value+"\n";	

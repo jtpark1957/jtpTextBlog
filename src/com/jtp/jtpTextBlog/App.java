@@ -3,24 +3,21 @@ package com.jtp.jtpTextBlog;
 
 import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.controller.Controller;
-import com.sbs.example.mysqlutil.MysqlUtil;
-
 public class App {
-	public void run(String cmd) {
-		MysqlUtil.setDBInfo("127.0.0.1", "jttpp", "123412", "textBoard");
-		Controller controller = getControllerByCmd(cmd);
-		if (controller != null) {
-			controller.doCommand(cmd);
-		}
-		MysqlUtil.closeConnection();
-	}
+//	public void run(String cmd) {
+//		MysqlUtil.setDBInfo("127.0.0.1", "jttpp", "123412", "textBoard");
+//		Controller controller = getControllerByCmd(cmd);
+//		if (controller != null) {
+//			controller.doCommand(cmd);
+//		}
+//		MysqlUtil.closeConnection();
+//	}
 	public String ret(String cmd) {
-		MysqlUtil.setDBInfo("127.0.0.1", "jttpp", "123412", "textBoard");
+		
 		Controller controller = getControllerByCmd(cmd);
 		if (controller != null) {
 			return controller.ret(cmd);
 		}
-		MysqlUtil.closeConnection();
 		return "";
 	}
 
@@ -28,6 +25,8 @@ public class App {
 		// TODO Auto-generated method stub
 		if (cmd.startsWith("article ")) {
 			return Container.articleController;
+		} else if (cmd.startsWith("member ")) {
+			return Container.memberController;
 		} 
 		return null;
 	}

@@ -2,55 +2,112 @@ package com.jtp.jtpTextBlog.controller;
 
 import java.util.List;
 
-import com.jtp.jtpTextBlog.Socket.WebSocket;
 import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.dto.Article;
+import com.jtp.jtpTextBlog.dto.Board;
+import com.jtp.jtpTextBlog.dto.Member;
 import com.jtp.jtpTextBlog.service.ArticleService;
+import com.jtp.jtpTextBlog.service.MemberService;
 
 public class ArticleController extends Controller {
 	private ArticleService articleService;
+	private MemberService memberService;
 
 	public ArticleController() {
 		articleService = Container.articleService;
-	}
-	public void doCommand(String cmd) {
-		if(cmd.startsWith("article list")) {
-			showList();
-		}
+		memberService = Container.memberService;
+		//memberService = new MemberService();
 	}
 	public String ret(String cmd) {
 		if(cmd.startsWith("article list")) {
-			return showListR();
+			return showList();
+		} else if(cmd.startsWith("article detail")) {
+			return showDeatil(cmd);
+		} else if( cmd.startsWith("article board")) {
+			return ListBoard(cmd);
+		} else if(cmd.startsWith("article selectBoard")) {
+			return doSelectBoard(cmd);
 		}
-		return null;
+		return "";
 	}
-	private String showListR() {
+	
+	private String doSelectBoard(String cmd) {
+		if (cmd.split("article")[1].equals(" selectBoard")) {
+			return "";
+		}
+		String input = cmd.split(" ")[2];
+		Board board = articleService.getBoardByCode(input);
+
+		if (board == null) {
+			
+			return "잘못된 코드입니다";
+		}
+
+		Container.session.setCurrentBoardCode(board.code);
+		return "게시물선택 : "+board.code+"<br>";
+	}
+	private String ListBoard(String cmd) {
+
+		
 		StringBuilder sb = new StringBuilder();
-		sb.append("==게시물 리스트==\n");		
+		sb.append("= 게시판 목록 =" + "<br>");
+		sb.append("번호 / 생성날짜 / 코드 / 이름 / 게시물 수" + "<br>");
+		List<Board> boards = articleService.getForPrintBoards();
+
+		for (Board board : boards) {
+			int articlesCount = articleService.getArticlesCount(board.id);
+			sb.append(board.id + " / " + board.regDate+ " / " + 
+			"<a href='#' onclick=\"sendMessage('article selectBoard " + board.code  +"')\">"+ board.name +"</a>"+ " / " + articlesCount + "<br>");
+		}
+
+		return sb.toString();
+			
+	}
+	private String showList() {
+		String boardCode = Container.session.getCurrentBoardCode();
+		Board board = articleService.getBoardByCode(boardCode);
+		StringBuilder sb = new StringBuilder();
+		sb.append("==게시물 리스트== " + board.name +"\n" );		
 		sb.append("<br>");
-		List<Article> articles = articleService.getArticles();
+		//List<Article> articles = articleService.getArticles();
+		List<Article> articles = articleService.getForPrintArticles(board.id);
 		sb.append("번호 / 작성 / 수정 / 작성자 / 제목\n");
 		sb.append("<br>");
 		for (Article article : articles) {
+			String writer = article.extra__writer;
 			
-			sb.append(article.id+" / "+ article.regDate+" / "+article.updateDate+" / "+article.memberId+" / "
-			+"<a href='#' onclick=\"sendMessage('article list')\">"+ article.title +"</a>");
+			sb.append(article.id+" / "+ article.regDate+" / "+article.updateDate+" / " +writer+" / "
+			+"<a href='#' onclick=\"sendMessage('article detail " + article.id  +"')\">"+ article.title +"</a>");
 			sb.append("\n");
 			//messageTextArea.value += '<a href=\"http://www.cosmosfarm.com/\">코스모스팜</a>';
 			sb.append("<br>");
 		}
 		return sb.toString();
 	}
-	private void showList() {
-		System.out.println("== 게시물 리스트 ==");
-
-		List<Article> articles = articleService.getArticles();
-
-		System.out.println("번호 / 작성 / 수정 / 작성자 / 제목");
-
-		for (Article article : articles) {
-			System.out.printf("%d / %s / %s / %s / %s\n", article.id, article.regDate, article.updateDate,
-					article.memberId, article.title);
+	private String showDeatil(String cmd) {
+		System.out.println("== 게시물 디테 ==");
+		if (cmd.split("article")[1].equals(" detail")) {
+			return "";
 		}
+		int input = Integer.parseInt(cmd.split(" ")[2]);
+
+		Article article = articleService.getArticle(input);
+		if (article == null) {
+			return "존재하지않는게시물";
+		}
+		Member member = memberService.getMemberById(article.memberId);
+		String writer = member.name;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("번호 : " + article.id+ "<br>");
+		sb.append("작성날짜 : " + article.regDate+ "<br>");
+		sb.append("수정날짜 : " + article.updateDate+ "<br>");
+		sb.append("작성자 : " + writer + "<br>");
+		sb.append("제목 : " + article.title + "<br>");
+		sb.append("내용 : " + article.body + "<br>");
+		
+		return sb.toString();
+
 	}
+	
 }
