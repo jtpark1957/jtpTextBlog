@@ -28,10 +28,11 @@ public class WebSocket {
 		// 에코 메시지를 작성한다.
 		String replymessage = new App().ret(message);
 		// 에코 메시지를 콘솔에 출력한다.
-		new App().run(message);
+		
 		
 		System.out.println("send to client : " + replymessage);
 		// 에코 메시지를 브라우저에 보낸다.
+		
 		return replymessage;
 		
 	}
