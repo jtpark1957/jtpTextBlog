@@ -1,0 +1,47 @@
+<%@ page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+%>
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 구글 폰트 불러오기 -->
+<!-- rotobo(400/900), notosanskr(400/900) -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&family=Roboto:wght@400;900&display=swap"
+	rel="stylesheet">
+<!-- 폰트어썸 불러오기 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+
+
+<!-- 제이쿼리 불러오기 -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<title>JTP WEB</title>
+<link rel="stylesheet" href="jsp/part/app.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="leftside"></div>
+		<div class="sidebar">
+			<div class="icon">
+				JTP <i class="far fa-kiss"></i>
+			</div>
+			<div class="links">
+				<a href="/" class="">HOME <i class="fas fa-info-circle"></i>
+				</a> <a href="/" class="">LOGIN <i class="fas fa-lock"></i>
+				</a> <a href="/" class="">ARTICLES <i class="fas fa-file-alt"></i>
+				</a> <a href="/" class="">ABOUTME <i class="fas fa-user"></i>
+				</a>
+			</div>
+		</div>
+		<div class="main">

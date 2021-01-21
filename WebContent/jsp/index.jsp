@@ -1,30 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<title>Web Socket Example</title>
-</head>
-<body >
+<%@ include file="/jsp/part/head.jspf"%>
+<style>
+.con1 {
+	padding-top: 10px;
+}
+.con1 .divTextArea {
+	width: 100%;
+	height: 300px;
+	background-color: #181818;
+	font-size: 0.9em;
+	overflow: auto;
+}
+
+.textMessage {
+	background-color: #181818;
+	color: white;
+	border: 0 none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	width: calc(50% - 0px);
+}
+
+.input {
+	display: none;
+}
+</style>
+<div class="con1">
 	<form name="test" onsubmit="return false;" autocomplete=off>
 
 
 		<!-- 송신 메시지를 작성하는 텍스트 박스 -->
-		<input id="textMessage" type="text"
-			onkeypress="if(event.keyCode==13) {sendMessage();}">
+		<input class="textMessage" id="textMessage" placeholder="command..."
+			type="text" onkeypress="if(event.keyCode==13) {sendMessage();}">
 		<!-- 메시지 송신을 하는 버튼 -->
-		<input onclick="sendMessage()" value="Send" type="button">
+		<input class="input" onclick="sendMessage()" value="Send"
+			type="button">
 		<!-- WebSocket 접속 종료하는 버튼 -->
-		<input onclick="disconnect()" value="Disconnect" type="button">
+		<input class="input" onclick="disconnect()" value="Disconnect"
+			type="button">
 	</form>
 	<br />
 	<!-- 콘솔 메시지의 역할을 하는 로그 텍스트 에리어.(수신 메시지도 표시한다.) -->
-	<textarea id="messageTextArea" rows="30" cols="70" style="display:none;"></textarea>
-	<div id="divTextArea" style="width:100%; height:600px;font-size:0.9em; overflow:auto;border: 1px solid;" >
-	</div>
+	<textarea id="messageTextArea" rows="30" cols="70"
+		style="display: none;"></textarea>
+	<div class="divTextArea" id="divTextArea"></div>
+</div>
 
-	<script type="text/javascript">	
+<script type="text/javascript">	
 	
       var webSocket = new WebSocket("ws://localhost:8083/jtpTextBlog/websocket");
       	
@@ -58,11 +81,9 @@
       if (message.value.indexOf("clear") > -1) { 
       	messageTextArea.value = '';
       	divTextArea.innerHTML = '';
-      } else if (message.value.indexOf("test") > -1) { 
-      	messageTextArea.value += '<a href=\"http://www.cosmosfarm.com/\">코스모스팜</a>';
-     
-      } 	
+      } 
       messageTextArea.scrollTop = messageTextArea.scrollHeight;
+      
       divTextArea.scrollTop = divTextArea.scrollHeight;
 
       message.value = "";	
@@ -71,5 +92,4 @@
       webSocket.close();	
     }	
   </script>
-</body>
-</html>
+<%@ include file="/jsp/part/foot.jspf"%>
