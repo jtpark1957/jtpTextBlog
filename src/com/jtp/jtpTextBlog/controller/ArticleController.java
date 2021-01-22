@@ -2,6 +2,9 @@ package com.jtp.jtpTextBlog.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.dto.Article;
 import com.jtp.jtpTextBlog.dto.Board;
@@ -108,6 +111,38 @@ public class ArticleController extends Controller {
 		
 		return sb.toString();
 
+	}
+	public String articleList(HttpServletRequest req, HttpServletResponse resp) {
+		int itemsInAPage = 10;
+		int totalCount = articleService.getArticlesCount(0);
+		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
+		int page = 1;
+		if (req.getParameter("page") != null) {
+			page = Integer.parseInt(req.getParameter("page"));
+		}
+		req.setAttribute("totalCount", totalCount);
+		req.setAttribute("totalPage", totalPage);
+		req.setAttribute("page", page);
+		List<Article> articles = articleService.getForPrintArticlesByBoardId(page, 0, itemsInAPage);
+		
+		req.setAttribute("articles", articles);
+
+		return "usr/article/articlelist";
+	}
+	public String showDetail(HttpServletRequest req, HttpServletResponse resp) {
+		int id = Integer.parseInt(req.getParameter("id"));
+
+		Article article = articleService.getForPrintArticleById(id);
+
+		if (article == null) {
+			req.setAttribute("alertMsg", id + "번 게시물은 존재하지 않습니다.");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+
+		req.setAttribute("article", article);
+
+		return "usr/article/detail";
 	}
 	
 }

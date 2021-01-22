@@ -40,4 +40,14 @@ public class ArticleService {
 	public int getArticlesCount(int boardId) {
 		return articleDao.getArticlesCount(boardId);
 	}
+
+	public List<Article> getForPrintArticlesByBoardId(int page, int boardId ,int itemsInAPage) {
+		return articleDao.getForPrintArticlesByBoardId(page, boardId ,itemsInAPage);
+	}
+
+	public Article getForPrintArticleById(int id) {
+		// TODO Auto-generated method stub
+		return articleDao.getForPrintArticleById(id);
+	}
+
 }

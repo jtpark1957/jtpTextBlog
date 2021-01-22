@@ -371,9 +371,9 @@ body {
 }
 .sidebar > .logo {
   position: sticky;
-  top: 10px;
+  top: 0px;
   font-size: 2rem;
-  padding: 5px 15px;
+  padding: 10px 15px;
 }
 .sidebar > .links {
   position: sticky;
@@ -420,9 +420,6 @@ body {
 }
 .list .body {
   padding-top: 15px;
-}
-.list .cont:hover {
-  text-decoration:underline;
 }
 .main .time {
   color: var(--gray);

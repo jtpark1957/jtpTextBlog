@@ -24,24 +24,45 @@
 <!-- 제이쿼리 불러오기 -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<link rel="stylesheet" href="/jsp/part/app.css" />		
+<script>
+	$(document).ready(function() {
+		var url = location.href;
+		console.log(url);
+		var getAr0 = url.indexOf("/s/article");
+	    var getAr1 = url.indexOf("board");
+	    var getAr2 = url.indexOf("contact");
+	    if(getAr0 != -1) {
+	    	console.log("dd");
+	        $(".sidebar .links a:nth-child(3)").addClass("on");
+	    }
+	    if(getAr1 != -1) {
+	        $("#board").addClass("active");
+	    }
+	    if(getAr2 != -1) {
+	        $("#contact").addClass("active");
+	    }
+	});	
+</script>
 
 <title>JTP WEB</title>
-<link rel="stylesheet" href="jsp/part/app.css" />
+
 </head>
 <body>
 	<div class="container">
 		<div class="leftside"></div>
 		<div class="sidebar">
-			<div class="icon">
-				JTP <i class="far fa-kiss"></i>
+			<div class="logo">
+				<a href ="/">
+				<i class="jtp">JTP</i>
+				<i class="far fa-kiss"></i>
+				</a>
 			</div>
 			<div class="links">
-				<a href="/" class="">HOME <i class="fas fa-info-circle"></i>
-				</a> <a href="/" class="">LOGIN <i class="fas fa-lock"></i>
-				</a> <a href="/" class="">ARTICLES <i class="fas fa-file-alt"></i>
-				</a> <a href="/" class="">ABOUTME <i class="fas fa-user"></i>
-				</a>
+				<a href="localhost:8083" class=""><i class="itext">HOME</i><i class="fas fa-home"></i></a> 
+				<a href="#" class=""><i class="itext">LOGIN</i><i class="fas fa-lock"></i></a>
+				 <a href="/s/articles" class=""><i class="itext">ARTICLES</i><i class="fas fa-file-alt"></i></a>
+				 <a href="#" class=""><i class="itext">ABOUTME</i><i class="fas fa-user"></i></a>
 			</div>
 		</div>
 		<div class="main">
