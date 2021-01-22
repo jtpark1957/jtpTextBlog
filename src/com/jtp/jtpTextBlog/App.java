@@ -27,7 +27,9 @@ public class App {
 			return Container.articleController;
 		} else if (cmd.startsWith("member ")) {
 			return Container.memberController;
-		} 
+		} else if (cmd.startsWith("hello world")) {
+			return Container.memberController;
+		}
 		return null;
 	}
 }

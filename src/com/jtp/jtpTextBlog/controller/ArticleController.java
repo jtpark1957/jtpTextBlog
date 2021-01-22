@@ -23,7 +23,7 @@ public class ArticleController extends Controller {
 	}
 	public String ret(String cmd) {
 		if(cmd.startsWith("article list")) {
-			return showList();
+			return showList(cmd);
 		} else if(cmd.startsWith("article detail")) {
 			return showDeatil(cmd);
 		} else if( cmd.startsWith("article board")) {
@@ -66,15 +66,29 @@ public class ArticleController extends Controller {
 		return sb.toString();
 			
 	}
-	private String showList() {
+	private String showList(String cmd) {
+		
 		String boardCode = Container.session.getCurrentBoardCode();
 		Board board = articleService.getBoardByCode(boardCode);
 		StringBuilder sb = new StringBuilder();
+		int itemsInAPage = 5;
+		int totalCount = articleService.getArticlesCount(0);
+		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
+		int page = 1;
 		sb.append("==게시물 리스트== " + board.name +"\n" );		
 		sb.append("<br>");
+		if (cmd.split("article")[1].equals(" list")) {
+			page = 1;
+		}else {
+			page = Integer.parseInt(cmd.split(" ")[2]);
+		}
+		
+
 		//List<Article> articles = articleService.getArticles();
-		List<Article> articles = articleService.getForPrintArticles(board.id);
-		sb.append("번호 / 작성 / 수정 / 작성자 / 제목\n");
+		//List<Article> articles = articleService.getForPrintArticles(board.id);
+		List<Article> articles = articleService.getForPrintArticlesByBoardId(page, 0, itemsInAPage);
+
+		sb.append("번호 / 작성 / 수정 / 작성자 / 제목" + " [" +page+" / "+totalPage+"]");
 		sb.append("<br>");
 		for (Article article : articles) {
 			String writer = article.extra__writer;

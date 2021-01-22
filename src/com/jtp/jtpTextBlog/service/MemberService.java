@@ -11,5 +11,9 @@ public class MemberService {
 	public Member getMemberById(int memberId) {
 		return memberDao.getMemberById(memberId);
 	}
+	public Member getMemberByLoginId(String loginId) {
+		// TODO Auto-generated method stub
+		return memberDao.getMemberByLoginId(loginId);
+	}
 
 }

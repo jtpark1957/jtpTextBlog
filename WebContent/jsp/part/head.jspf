@@ -59,7 +59,7 @@
 				</a>
 			</div>
 			<div class="links">
-				<a href="localhost:8083" class=""><i class="itext">HOME</i><i class="fas fa-home"></i></a> 
+				<a href="/" class=""><i class="itext">HOME</i><i class="fas fa-home"></i></a> 
 				<a href="#" class=""><i class="itext">LOGIN</i><i class="fas fa-lock"></i></a>
 				 <a href="/s/articles" class=""><i class="itext">ARTICLES</i><i class="fas fa-file-alt"></i></a>
 				 <a href="#" class=""><i class="itext">ABOUTME</i><i class="fas fa-user"></i></a>

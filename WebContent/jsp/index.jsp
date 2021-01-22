@@ -66,7 +66,8 @@
       var divTextArea =  document.getElementById("divTextArea");
       webSocket.onopen = function(message) {	
         messageTextArea.value += "Server connect...\n";	
-        divTextArea.innerHTML += "Server connect..."+"<br>";	 
+        divTextArea.innerHTML += "Server connect..."+"<br>";
+        sendMessage("hello world");	 
       };	
       webSocket.onclose = function(message) {	
         messageTextArea.value += "Server Disconnect...\n";	
