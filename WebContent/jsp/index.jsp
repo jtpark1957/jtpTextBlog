@@ -8,7 +8,7 @@
 	
 }
 .con1 .con1-form {
- /* position: sticky;
+ /* position: sticky;	
   top: 10px; */
  }
 .con1 .divTextArea {
@@ -79,6 +79,10 @@
       };	
       webSocket.onmessage = function(message) {	
       	console.log(message);
+      	if(message.data.startsWith("/")) {
+      		location.href=message.data;
+      	
+      	} 
         messageTextArea.value += message.data;	
         divTextArea.innerHTML += message.data;	
       };	

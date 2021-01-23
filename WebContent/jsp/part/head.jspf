@@ -1,12 +1,10 @@
 <%@ page import="java.util.List"%>
+<%@ page import="com.jtp.jtpTextBlog.container.Container"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-%>
 
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,8 +42,10 @@
 	    }
 	});	
 </script>
-
-<title>JTP WEB</title>
+<%
+boolean dd = Container.session.isLogined();
+%>
+<title>JTP WEB<%=dd%></title>
 
 </head>
 <body>
@@ -60,7 +60,11 @@
 			</div>
 			<div class="links">
 				<a href="/" class=""><i class="itext">HOME</i><i class="fas fa-home"></i></a> 
-				<a href="#" class=""><i class="itext">LOGIN</i><i class="fas fa-lock"></i></a>
+				<%if(dd== true)  {%>
+				<a href="/s/doLogout" class=""><i class="itext">LOGOUT</i><i class="fas fa-lock"></i></a>
+				<%} else {%>
+				<a href="/s/login" class=""><i class="itext">LOGIN</i><i class="fas fa-lock"></i></a>
+				<%}%>
 				 <a href="/s/articles" class=""><i class="itext">ARTICLES</i><i class="fas fa-file-alt"></i></a>
 				 <a href="#" class=""><i class="itext">ABOUTME</i><i class="fas fa-user"></i></a>
 			</div>

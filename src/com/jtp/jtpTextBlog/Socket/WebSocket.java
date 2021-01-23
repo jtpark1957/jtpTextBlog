@@ -32,7 +32,6 @@ public class WebSocket {
 		
 		System.out.println("send to client : " + replymessage);
 		// 에코 메시지를 브라우저에 보낸다.
-		
 		return replymessage;
 		
 	}

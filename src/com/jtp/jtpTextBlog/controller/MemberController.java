@@ -2,6 +2,10 @@ package com.jtp.jtpTextBlog.controller;
 
 import java.util.Scanner;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.dto.Member;
 import com.jtp.jtpTextBlog.service.ArticleService;
@@ -22,7 +26,6 @@ public class MemberController extends Controller {
 		return "";
 	}
 	private String helloWorld(String cmd) {
-		System.out.println("== 회원확인 ==");
 		if (Container.session.isLogined() == false) {
 			return "";
 		}
@@ -65,8 +68,52 @@ public class MemberController extends Controller {
 		}
 
 		Container.session.login(member.id);
+		return("/");
+		//return(member.name+"님 환영합니다<br>");
+	}
+	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
+		return "usr/member/login";
+	}
+	public String doLogin(HttpServletRequest req, HttpServletResponse resp) {
+		if (Container.session.isLogined()) {
+			req.setAttribute("alertMsg","로그아웃 후 이용해주세요");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		String loginId = req.getParameter("loginId");
+		String loginPw = req.getParameter("loginPw");
+		
+		Member member = memberService.getMemberByLoginId(loginId);
 
-		return(member.name+"님 환영합니다<br>");
+		if (member == null) {
+			req.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+
+		if (member.loginPw.equals(loginPw) == false) {
+			req.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+
+		HttpSession session = req.getSession();
+		session.setAttribute("loginedMemberId", member.id);
+		Container.session.login(member.id);
+		req.setAttribute("alertMsg", "");
+		req.setAttribute("replaceUrl", "/");
+		return "common/redirect";
+	}
+	public String doLogout(HttpServletRequest req, HttpServletResponse resp) {
+		if (Container.session.isLogined() == false) {
+			req.setAttribute("alertMsg","로그인 후 이용해주세요");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		Container.session.logout();
+		req.setAttribute("alertMsg","");
+		req.setAttribute("replaceUrl", "/");
+		return "common/redirect";
 	}
 
 }

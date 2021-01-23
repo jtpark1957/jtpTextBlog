@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.controller.ArticleController;
 import com.jtp.jtpTextBlog.controller.Controller;
+import com.jtp.jtpTextBlog.controller.MemberController;
 import com.sbs.example.mysqlutil.MysqlUtil;
 
 /**
@@ -35,7 +36,14 @@ public class DispatcherServlet extends HttpServlet {
 
 		String jspPath = null;
 		if (controllerName.equals("login")) {
-			jspPath = "login";
+			MemberController memberController =Controller.memberController;
+			jspPath = memberController.showLogin(req, resp);
+		} else if (controllerName.equals("doLogin")) {
+			MemberController memberController =Controller.memberController;
+			jspPath = memberController.doLogin(req, resp);
+		} else if (controllerName.equals("doLogout")) {
+			MemberController memberController =Controller.memberController;
+			jspPath = memberController.doLogout(req, resp);
 		} else if (controllerName.equals("cmd")) {
 			jspPath = "index";
 		} else if (controllerName.equals("articles")) {
@@ -63,5 +71,8 @@ public class DispatcherServlet extends HttpServlet {
 
 		RequestDispatcher rd = req.getRequestDispatcher("/jsp/" + jspPath + ".jsp");
 		rd.forward(req, resp);
+	}
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
 }
