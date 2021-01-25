@@ -12,6 +12,7 @@ public class Article {
 	public int boardId ;
 	
 	public String extra__writer;
+	public String extra__boardName;
 
 	public Article(Map<String, Object> Map) {
 		this.id = (int) Map.get("id");
@@ -23,6 +24,9 @@ public class Article {
 		this.boardId = (int) Map.get("boardId");
 		if (Map.containsKey("extra__writer")) {
 			this.extra__writer = (String) Map.get("extra__writer");
+		}
+		if (Map.containsKey("extra__boardName")) {
+			this.extra__boardName = (String) Map.get("extra__boardName");
 		}
 	}
 	@Override

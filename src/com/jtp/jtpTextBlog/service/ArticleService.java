@@ -27,6 +27,9 @@ public class ArticleService {
 	public Board getBoardByCode(String boardCode) {
 		return articleDao.getBoardByCode(boardCode);
 	}
+	public Board getBoardById(int boardId) {
+		return articleDao.getBoardById(boardId);
+	}
 
 	public List<Article> getForPrintArticles(int id) {
 		// TODO Auto-generated method stub

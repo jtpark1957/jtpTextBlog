@@ -1,9 +1,11 @@
 <%@page import="com.jtp.jtpTextBlog.dto.Article"%>
+<%@page import="com.jtp.jtpTextBlog.dto.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
 <%
 	List<Article> articles = (List<Article>) request.getAttribute("articles");
+	
 	int totalPage = (int) request.getAttribute("totalPage");
 	int paramPage = (int) request.getAttribute("page");
 %>
@@ -27,6 +29,9 @@
 	font-size: 3px;
 	display: none;
 }
+.board {
+  float: right;
+}
 </style>
 <div class="list">
 	<p>article list</p>
@@ -34,8 +39,12 @@
 	for (Article article : articles) {
 	%>
 	<div class="ar">
-		<div class="title">
+		<div class="title"> 
+		<%
+		/* Board board = getBoardByCode(article.boardId); */
+		%>
 			<a class="w"><%=article.extra__writer%> </a> <a class="time"><%=article.regDate%></a>
+			<a class="board"><%=article.extra__boardName%> </a>
 		</div>
 		<a class="cont" href="/s/detail?id=<%=article.id%>"><%=article.title%></a>
 	</div>

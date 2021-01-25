@@ -154,6 +154,20 @@ public class ArticleDao {
 
 		return new Article(map);
 	}
+	public Board getBoardById(int boardId) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT *");
+		sql.append("FROM board");
+		sql.append("WHERE `id` = ?", boardId);
+
+		Map<String, Object> map = MysqlUtil.selectRow(sql);
+
+		if (map.isEmpty()) {
+			return null;
+		}
+
+		return new Board(map);
+	}
 
 
 

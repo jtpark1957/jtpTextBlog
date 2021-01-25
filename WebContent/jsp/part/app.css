@@ -418,6 +418,9 @@ body {
 .ar > .title {
   padding-bottom: 10px;
 }
+.title > .board {
+  float: right;
+}
 .list .body {
   padding-top: 15px;
 }
