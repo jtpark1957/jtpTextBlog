@@ -40,12 +40,12 @@ public class ArticleService {
 		return articleDao.getForPrintBoards();
 	}
 
-	public int getArticlesCount(int boardId) {
-		return articleDao.getArticlesCount(boardId);
+	public int getArticlesCount(int boardId, String searchKeywordType, String searchKeyword) {
+		return articleDao.getArticlesCount(boardId, searchKeywordType, searchKeyword);
 	}
 
-	public List<Article> getForPrintArticlesByBoardId(int page, int boardId ,int itemsInAPage) {
-		return articleDao.getForPrintArticlesByBoardId(page, boardId ,itemsInAPage);
+	public List<Article> getForPrintArticlesByBoardId(int page, int boardId ,int itemsInAPage, String searchKeywordType, String searchKeyword) {
+		return articleDao.getForPrintArticlesByBoardId(page, boardId ,itemsInAPage, searchKeywordType, searchKeyword);
 	}
 
 	public Article getForPrintArticleById(int id) {

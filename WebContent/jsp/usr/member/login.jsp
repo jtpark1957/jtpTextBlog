@@ -42,6 +42,10 @@
   float: right;
   width: calc(50% - 1px);
 }
+.error {
+	color: red;
+	font-size: var(--small);
+}
 </style>
 
 <div class="login">
@@ -75,6 +79,9 @@
 		DoLoginForm__submited = true;
 	}
 	</script>
+	<%
+
+	%>
 	<div class="title">
 		<p>login</p>
 	</div>
@@ -87,6 +94,12 @@
 			<label for="id_loginPw">Password</label> <input type="password"
 				name="loginPw" id="id_loginPw" value="">
 		</div>
+		<%
+			String error = (String)session.getAttribute("errorMsg");
+			if(error != null) { 
+		%>
+	    <div class="error"><p><%=error%></p></div>
+	    <%session.removeAttribute("errorMsg");}%>
 		<input type="submit" value="Login">
 	</form>
 	

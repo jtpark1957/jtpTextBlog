@@ -346,6 +346,8 @@ html {
   --black: #e0e0e0;
   --aqua: #00d0f0;
   --ocean: #00f0ff;
+  --radius: 5px;
+  --small: 13px;
 }
 body {
   background-color: var(--gainsboro);
@@ -371,9 +373,9 @@ body {
 }
 .sidebar > .logo {
   position: sticky;
-  top: 0px;
+  top: 10px;
   font-size: 2rem;
-  padding: 10px 15px;
+  padding: 5px 15px;
 }
 .sidebar > .links {
   position: sticky;
@@ -420,6 +422,9 @@ body {
 }
 .list .body {
   padding-top: 15px;
+}
+.list .cont:hover {
+  text-decoration:underline;
 }
 .main .time {
   color: var(--gray);

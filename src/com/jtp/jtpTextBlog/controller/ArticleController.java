@@ -58,7 +58,7 @@ public class ArticleController extends Controller {
 		List<Board> boards = articleService.getForPrintBoards();
 
 		for (Board board : boards) {
-			int articlesCount = articleService.getArticlesCount(board.id);
+			int articlesCount = articleService.getArticlesCount(board.id, "" , "");
 			sb.append(board.id + " / " + board.regDate+ " / " + 
 			"<a href='#' onclick=\"sendMessage('article selectBoard " + board.code  +"')\">"+ board.name +"</a>"+ " / " + articlesCount + "<br>");
 		}
@@ -72,7 +72,7 @@ public class ArticleController extends Controller {
 		Board board = articleService.getBoardByCode(boardCode);
 		StringBuilder sb = new StringBuilder();
 		int itemsInAPage = 5;
-		int totalCount = articleService.getArticlesCount(0);
+		int totalCount = articleService.getArticlesCount(board.id, "", "");
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
 		int page = 1;
 		sb.append("==게시물 리스트== " + board.name +"\n" );		
@@ -86,7 +86,7 @@ public class ArticleController extends Controller {
 
 		//List<Article> articles = articleService.getArticles();
 		//List<Article> articles = articleService.getForPrintArticles(board.id);
-		List<Article> articles = articleService.getForPrintArticlesByBoardId(page, 0, itemsInAPage);
+		List<Article> articles = articleService.getForPrintArticlesByBoardId(page, board.id, itemsInAPage, "", "");
 
 		sb.append("번호 / 작성 / 수정 / 작성자 / 제목" + " [" +page+" / "+totalPage+"]");
 		sb.append("<br>");
@@ -127,17 +127,38 @@ public class ArticleController extends Controller {
 
 	}
 	public String articleList(HttpServletRequest req, HttpServletResponse resp) {
+		String boardCode;
+		String code = "";
+		String searchKeyword = req.getParameter("searchKeyword");
+		String searchKeywordType = req.getParameter("searchKeywordType");
+		int boardId = 0;
+		
+		if (req.getParameter("boardcode") != null) {
+			boardCode = req.getParameter("boardcode");
+			Board board = articleService.getBoardByCode(boardCode);
+			if(board != null) {
+				boardId = board.id; 
+				code = board.name;
+			}
+			
+		}
 		int itemsInAPage = 10;
-		int totalCount = articleService.getArticlesCount(0);
+		int totalCount = articleService.getArticlesCount(boardId, searchKeywordType, searchKeyword);
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
 		int page = 1;
 		if (req.getParameter("page") != null) {
 			page = Integer.parseInt(req.getParameter("page"));
 		}
+		
+		
+		
 		req.setAttribute("totalCount", totalCount);
 		req.setAttribute("totalPage", totalPage);
 		req.setAttribute("page", page);
-		List<Article> articles = articleService.getForPrintArticlesByBoardId(page, 0, itemsInAPage);
+		
+		req.setAttribute("code", code);
+		req.setAttribute("boardId", boardId);
+		List<Article> articles = articleService.getForPrintArticlesByBoardId(page, boardId, itemsInAPage, searchKeywordType, searchKeyword);
 		
 		req.setAttribute("articles", articles);
 

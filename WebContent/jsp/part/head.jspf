@@ -22,23 +22,21 @@
 <!-- 제이쿼리 불러오기 -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="/jsp/part/app.css" />		
+<link rel="stylesheet" href="/jsp/part/cs.css" />		
 <script>
 	$(document).ready(function() {
 		var url = location.href;
 		console.log(url);
 		var getAr0 = url.indexOf("/s/article");
-	    var getAr1 = url.indexOf("board");
-	    var getAr2 = url.indexOf("contact");
+		var getAr1 = url.indexOf("/s/login");
+	    var getAr2 = url.indexOf("/");
+	    
 	    if(getAr0 != -1) {
-	    	console.log("dd");
 	        $(".sidebar .links a:nth-child(3)").addClass("on");
-	    }
-	    if(getAr1 != -1) {
-	        $("#board").addClass("active");
-	    }
-	    if(getAr2 != -1) {
-	        $("#contact").addClass("active");
+	    } else if(getAr1 != -1) {
+	        $(".sidebar .links a:nth-child(2)").addClass("on");
+	    } else if(getAr2 != -1) {
+	        $(".sidebar .links a:nth-child(1)").addClass("on");
 	    }
 	});	
 </script>

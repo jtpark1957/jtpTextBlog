@@ -72,6 +72,7 @@ public class MemberController extends Controller {
 		//return(member.name+"님 환영합니다<br>");
 	}
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
+		
 		return "usr/member/login";
 	}
 	public String doLogin(HttpServletRequest req, HttpServletResponse resp) {
@@ -84,11 +85,17 @@ public class MemberController extends Controller {
 		String loginPw = req.getParameter("loginPw");
 		
 		Member member = memberService.getMemberByLoginId(loginId);
-
+		
 		if (member == null) {
-			req.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
+//			req.setAttribute("alertMsg", "");
+//			req.setAttribute("replaceUrl", "/s/login");
+//			HttpSession session = req.getSession();
+//			session.setAttribute("errorMsg", "잘못된 값입니다 ");
+			req.setAttribute("alertMsg", "잘못된 아이디입니다");
 			req.setAttribute("historyBack", true);
+
 			return "common/redirect";
+				
 		}
 
 		if (member.loginPw.equals(loginPw) == false) {

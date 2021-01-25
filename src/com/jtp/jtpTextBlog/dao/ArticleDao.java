@@ -40,13 +40,25 @@ public class ArticleDao {
 
 		return new Article(articleMap);
 	}
-	public int getArticlesCount(int boardId) {
+	public int getArticlesCount(int boardId, String searchKeywordType, String searchKeyword) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT COUNT(*) AS cnt");
-		sql.append("FROM article");
+		sql.append("FROM article AS A");
 		//sql.append("WHERE boardId = ?", boardId);
+		sql.append("WHERE 1");
+
 		if (boardId != 0) {
-			sql.append("WHERE boardId = ?", boardId);
+			sql.append("AND A.boardId = ?", boardId);
+		}
+
+		if (searchKeyword != null) {
+			if (searchKeywordType == null || searchKeywordType.equals("title")) {
+				sql.append("AND A.title LIKE CONCAT('%', ? '%')", searchKeyword);
+			} else if (searchKeywordType.equals("body")) {
+				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword);
+			} else if (searchKeywordType.equals("titleAndBody")) {
+				sql.append("AND (A.title LIKE CONCAT('%', ? '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword);
+			}
 		}
 		return MysqlUtil.selectRowIntValue(sql);
 	}
@@ -104,7 +116,7 @@ public class ArticleDao {
 		return boards;
 	}
 
-	public List<Article> getForPrintArticlesByBoardId(int page, int boardId,int itemsInAPage) {
+	public List<Article> getForPrintArticlesByBoardId(int page, int boardId,int itemsInAPage, String searchKeywordType, String searchKeyword) {
 		List<Article> articles = new ArrayList<>();
 		
 		int limitFrom = (page - 1) * itemsInAPage;
@@ -120,6 +132,15 @@ public class ArticleDao {
 		sql.append("ON A.boardId = B.id");
 		if (boardId != 0) {
 			sql.append("WHERE A.boardId = ?", boardId);
+		}
+		if (searchKeyword != null) {
+			if (searchKeywordType == null || searchKeywordType.equals("title")) {
+				sql.append("AND A.title LIKE CONCAT('%', ? '%')", searchKeyword);
+			} else if (searchKeywordType.equals("body")) {
+				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword);
+			} else if (searchKeywordType.equals("titleAndBody")) {
+				sql.append("AND (A.title LIKE CONCAT('%', ? '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword);
+			}
 		}
 		sql.append("ORDER BY A.id DESC");
 		sql.append("LIMIT ?, ? ", limitFrom, itemsInAPage);

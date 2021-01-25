@@ -346,6 +346,7 @@ html {
   --black: #e0e0e0;
   --aqua: #00d0f0;
   --ocean: #00f0ff;
+  --radius: 5px;
 }
 body {
   background-color: var(--gainsboro);
@@ -417,9 +418,6 @@ body {
 }
 .ar > .title {
   padding-bottom: 10px;
-}
-.title > .board {
-  float: right;
 }
 .list .body {
   padding-top: 15px;
