@@ -120,6 +120,8 @@ public class MemberController extends Controller {
 		Container.session.logout();
 		req.setAttribute("alertMsg","");
 		req.setAttribute("replaceUrl", "/");
+		HttpSession session = req.getSession();
+		session.removeAttribute("loginedMemberId");
 		return "common/redirect";
 	}
 

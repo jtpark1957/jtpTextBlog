@@ -337,7 +337,7 @@ label[for] {
 /* 커스텀 */
 
 /* 고정형 .con 시작 */
-html {
+html.dark {
   --white: #000;
   --whitesmoke: #181818;
   --gainsboro: #282828;
@@ -349,6 +349,23 @@ html {
   --radius: 5px;
   --small: 13px;
 }
+html {
+    --super: 8px;
+    --tiny: 11px;
+    --small: 13px;
+    --regular: 14px;
+    --radius: 5px;
+    --d: 0.2s;
+    --white: #fff;
+    --whitesmoke: #f0f0f0;
+    --gainsboro: #e0e0e0;
+    --silver: #c0c0c0;
+    --gray: #808080;
+    --black: #000;
+    --aqua: #0080f0;
+    --ocean: #003080;
+    --orange: #FF2600;
+}	
 body {
   background-color: var(--gainsboro);
   color: var(--black);
@@ -420,6 +437,10 @@ body {
 .ar > .title {
   padding-bottom: 10px;
 }
+.ar .modify,.delete {
+  float: right;
+  padding-left: 10px;
+}
 .list .body {
   padding-top: 15px;
 }
@@ -432,7 +453,45 @@ body {
 .rightside {
   background-color: var(--white);
 }
-b,i,u {
+.writebutton {
+  float: right;
+  background-color: var(--whitesmoke);
+  color: var(--black);
+  border-radius: var(--radius);
+  border: solid 1px var(--black);
+  font-size: 13px;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 2px 5px 5px 5px;
+}
+.search {
+  padding-top: 10px;
+/*   display: flex;
+  justify-content: center;
+ */
+
+}
+.search select {
+  color: var(--black);
+  padding: 5px;
+  border: 0 none;
+  background-color: var(--whitesmoke);
+  border-radius: var(--radius);
+  width:15%;
+}
+.search input {
+  border-radius: var(--radius);
+  border: 0 none;
+
+  padding: 5px ;
+   overflow: hidden;
+  white-space:nowrap
+}
+.search input[type="text"] {
+  width: 25%;
+  
+}
+i,u {
   font-style: normal;
   font-weight: normal;
   text-decoration: none;

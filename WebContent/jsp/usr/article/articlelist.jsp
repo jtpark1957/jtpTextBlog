@@ -55,7 +55,7 @@
 	%>
 
 </div>
-<div>
+<div class="search">
 	<script>
 	let DoSearchForm__submited = false;
 	function DoSearchForm__submit(form) {
@@ -102,12 +102,16 @@
 
 
 		</script>
-		<input value="${param.searchKeyword}" type="text" name="searchKeyword" placeholder="검색어를 입력해주세요." />
+		<input value="${param.searchKeyword}" type="text" name="searchKeyword" placeholder="" />
 		<input type="submit" value="검색" />
+		<a class="writebutton" href="/s/write"><i class="fas fa-pen"></i> 쓰기</a>
 	</form>
 </div>
+<script>
+</script>
 <div class="page">
-	<a class="display" href="?page=1"><<</a>
+	<a class="display" href="?boardcode=${param.boardcode}&searchKeywordType=${param.searchKeywordType}
+					&searchKeyword=${param.searchKeyword}&page=1"><<</a>
 	<%
 	for (int i = 1; i <= totalPage; i++) {
 		String code = "none";
@@ -126,6 +130,7 @@
 					/* ?boardcode=free&searchKeywordType=title&searchKeyword= */
 				}
 				%>
+	
 					<a class="<%=code%>" href="?boardcode=${param.boardcode}&searchKeywordType=${param.searchKeywordType}
 					&searchKeyword=${param.searchKeyword}&page=<%=i%>"><%=i%></a>
 					
@@ -134,6 +139,7 @@
 		}
 	}
 %>
-<a class="display" href="?page=<%=totalPage%>">>></a>
+<a class="display" href="?boardcode=${param.boardcode}&searchKeywordType=${param.searchKeywordType}
+					&searchKeyword=${param.searchKeyword}&page=<%=totalPage%>">>></a>
 </div>
 <%@ include file="/jsp/part/foot.jspf"%>

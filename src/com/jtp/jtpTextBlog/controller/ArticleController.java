@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.dto.Article;
@@ -179,5 +180,41 @@ public class ArticleController extends Controller {
 
 		return "usr/article/detail";
 	}
+	public String doDelete(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		if (session.getAttribute("loginedMemberId") == null) {
+			req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+
+		int id = Integer.parseInt(req.getParameter("id"));
+
+		Article article = articleService.getForPrintArticleById(id);
+		if (article == null) {
+			req.setAttribute("alertMsg", id + "번 게시물은 존재하지 않습니다.");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		if (article.memberId != Container.session.getLoginedMemberId()) {
+			req.setAttribute("alertMsg", "권한이 없습니다");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+
+		articleService.delete(id);
+
+		int boardId = article.boardId;
+
+		req.setAttribute("alertMsg", id + "번 게시물이 삭제되었습니다.");
+		req.setAttribute("replaceUrl", "articles");
+		//req.setAttribute("replaceUrl", String.format("articles?boardcode=%d", boardId));
+		return "common/redirect";
+	}
+	public String articleWrite(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		return "usr/article/write";
+	}
+	
 	
 }

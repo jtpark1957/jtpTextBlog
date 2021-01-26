@@ -6,14 +6,17 @@
 	Article article = (Article) request.getAttribute("article");
 %>
 <div class="list">
-      <p>article list</p>
+      <p>article detail</p>
   
       <div class="ar">
         <div class="title">
           <a class="w"><%=article.extra__writer%> </a>
           <a class="time"><%=article.regDate%></a>
+          <a class="delete" onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) { return false; }" href="doDelete?id=<%=article.id%>">삭제</a>
+          <a class="modify" href="modify?id=<%=article.id%>">수정</a>
+	      
          </div>
-        <b><%=article.title%></b>
+        <a><%=article.title%></a>
       </div>
       <div class="body">
       	<%=article.body %>

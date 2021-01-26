@@ -15,7 +15,7 @@
 	width: 100%;
 	height: 80vh;
 	
-	border-bottom: #181818 solid 2vh;
+	border-bottom: var(--whitesmoke) solid 2vh;
 	font-size: 0.9em;
 	overflow: auto;
 }
@@ -25,8 +25,8 @@
 }
 
 .textMessage {
-	background-color: #181818;
-	color: white;
+	background-color: var(--whitesmoke);
+	color: var(--black);
 	border: 0 none;
 	padding: 5px 10px;
 	border-radius: 5px;
@@ -97,7 +97,14 @@
       if (message.value.indexOf("clear") > -1) { 
       	messageTextArea.value = '';
       	divTextArea.innerHTML = '';
-      } 
+      } if(message.value.indexOf("dark") > -1) {
+	      if($.cookie('dark').indexOf("Y") > -1) {
+	      	$.cookie('dark', 'N', {path: '/' });
+	      } else {
+	      	$.cookie('dark', 'Y', {path: '/' });
+	      }
+	      location.href="/";
+      }
       
       messageTextArea.scrollTop = messageTextArea.scrollHeight;
       divTextArea.scrollTop = divTextArea.scrollHeight;

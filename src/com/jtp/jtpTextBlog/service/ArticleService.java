@@ -53,4 +53,9 @@ public class ArticleService {
 		return articleDao.getForPrintArticleById(id);
 	}
 
+	public int delete(int id) {
+		return articleDao.delete(id);
+		
+	}
+
 }
