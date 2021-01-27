@@ -111,7 +111,7 @@
 		</script>
 		<input value="${param.searchKeyword}" type="text" name="searchKeyword" placeholder="" />
 		<input type="submit" value="검색" />
-		<a class="writebutton" href="/s/write"><i class="fas fa-pen"></i> 쓰기</a>
+		<a class="writebutton" href="/s/write?boardcode=${param.boardcode}"><i class="fas fa-pen"></i> 쓰기</a>
 	</form>
 </div>
 <script>

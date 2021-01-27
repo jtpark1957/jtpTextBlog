@@ -233,7 +233,11 @@ public class ArticleController extends Controller {
 			return "common/redirect";
 		}
 		int memberId = (int) (session.getAttribute("loginedMemberId"));
-		int boardId = Integer.parseInt(req.getParameter("boardcode"));
+		String boardcode= req.getParameter("boardcode");
+		Board board = articleService.getBoardByCode(boardcode);
+		int boardId = board.id;
+		
+		
 		String title = req.getParameter("title");
 		String body = req.getParameter("body");
 

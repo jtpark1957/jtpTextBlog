@@ -12,16 +12,23 @@
 }
 </style>
 <script>
+
 	let DoWriteForm__submited = false;
 	let DoWriteForm__checkedLoginId = "";
-	
+
 	// 폼 발송전 체크
 	function DoWriteForm__submit(form) {
 		if ( DoWriteForm__submited ) {
 			alert('처리중입니다.');
 			return;
 		}
-	
+		form.boardcode.value = form.boardcode.value.trim();		
+		if ( form.boardcode.value.length == 0 ) {
+			alert('게시판을 설정해주세요.');
+			form.boardcode.focus();
+			
+			return;
+		}
 		form.title.value = form.title.value.trim();
 	
 		if ( form.title.value.length == 0 ) {
@@ -61,10 +68,18 @@
 			List<Board> boards = (List<Board>) request.getAttribute("boards");
 			for (Board board : boards) {
 				if(board.id != 1) {
-				%> <option value="<%=board.id%>"><%=board.name%></option> <%  
+				%> <option value="<%=board.code%>"><%=board.name%></option> <%  
 			} }
 			%>
 		</select> 
+		
+	      <script>
+	      	const param__boardcode = '${param.boardcode}';
+
+		if ( param__boardcode ) {
+			$('select[name="boardcode"]').val(param__boardcode);
+		}
+	      </script>
          </div>
         <b><input autocomplete ="off" value="" type="text" name="title" style="width: 100%; padding: 5px 0px;"placeholder=""></b>
       </div>

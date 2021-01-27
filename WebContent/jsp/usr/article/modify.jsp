@@ -67,6 +67,13 @@ Article article = (Article) request.getAttribute("article");
 			} }
 			%>
 		</select> 
+	    <script>
+	      	const param__boardcode = '<%=article.boardId%>';
+
+		if ( param__boardcode ) {
+			$('select[name="boardcode"]').val(param__boardcode);
+		}
+	      </script>
          </div>
         <b><input autocomplete ="off" value="<%=article.title %>" type="text" name="title" style="width: 100%; padding: 5px 0px;"placeholder=""></b>
       </div>
