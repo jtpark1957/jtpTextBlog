@@ -66,7 +66,6 @@ public class MemberController extends Controller {
 		if (member.loginPw.equals(loginPw) == false) {
 			return("비밀번호가 일치하지 않습니다.<br>");
 		}
-
 		Container.session.login(member.id);
 		return("/");
 		//return(member.name+"님 환영합니다<br>");

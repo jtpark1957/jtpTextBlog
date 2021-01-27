@@ -1,6 +1,8 @@
 package com.jtp.jtpTextBlog.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -214,6 +216,30 @@ public class ArticleController extends Controller {
 	public String articleWrite(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
 		return "usr/article/write";
+	}
+	public String articleDoWrite(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		if (session.getAttribute("loginedMemberId") == null) {
+			req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		int memberId = (int) (session.getAttribute("loginedMemberId"));
+		int boardId = Integer.parseInt(req.getParameter("boardcode"));
+		String title = req.getParameter("title");
+		String body = req.getParameter("body");
+
+		Map<String, Object> writeArgs = new HashMap<>();
+		writeArgs.put("memberId", memberId);
+		writeArgs.put("boardId", boardId);
+		writeArgs.put("title", title);
+		writeArgs.put("body", body);
+
+		int newArticleId = articleService.write(writeArgs);
+
+		req.setAttribute("alertMsg", newArticleId + "번 게시물이 생성되었습니다.");
+		req.setAttribute("replaceUrl", String.format("detail?id=%d", newArticleId));
+		return "common/redirect";
 	}
 	
 	

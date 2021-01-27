@@ -2,9 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
-<%@ include file="/jsp/part/toastUiEditor.jspf"%>
 <%
-
+/* System.out.println(session.getAttribute("loginedMemberId")); */
 %>
 <style>
 .te-ww-container {
@@ -12,32 +11,41 @@
 }
 </style>
 <script>
-	var DoWriteForm__submitDone = false;
+	let DoWriteForm__submited = false;
+	let DoWriteForm__checkedLoginId = "";
+	
+	// 폼 발송전 체크
 	function DoWriteForm__submit(form) {
-		if ( DoWriteForm__submitDone ) {
+		if ( DoWriteForm__submited ) {
 			alert('처리중입니다.');
 			return;
 		}
-		
+	
 		form.title.value = form.title.value.trim();
+	
 		if ( form.title.value.length == 0 ) {
 			alert('제목을 입력해주세요.');
 			form.title.focus();
-			return false;
+			
+			return;
 		}
-		var editor = $(form).find('.toast-editor').data('data-toast-editor');
-		var body = editor.getMarkdown();
-		body = body.trim();
+		
+		const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+		const body = editor.getMarkdown().trim();
+		
 		if ( body.length == 0 ) {
 			alert('내용을 입력해주세요.');
 			editor.focus();
-			return false;
+			
+			return;
 		}
+		
 		form.body.value = body;
+		
 		form.submit();
-		DoWriteForm__submitDone = true;
+		DoWriteForm__submited = true;
 	}
-</script>
+	</script>
 <div class="list">
       <p>article write</p>
   	<form action="doWrite" method="POST" onsubmit="DoWriteForm__submit(this); return false;">
@@ -46,13 +54,15 @@
         <div class="title">
           <a class="w">게시글작성</a>
           <a class="time"></a>
-	      
+	      <select name="boardcode">
+			<option value=2>자유</option>
+		</select> 
          </div>
-        <b><input value="" type="text" name="title" style="width: 100%; padding: 5px 0px;"placeholder=""></b>
+        <b><input autocomplete ="off" value="" type="text" name="title" style="width: 100%; padding: 5px 0px;"placeholder=""></b>
       </div>
       <div class="body">
      	 <script type="text/x-template"></script>
-		<div class="toast-editor"></div>
+		<div class="toast-ui-editor"></div>
       </div>
       <input type="submit" value="등록">
     </form> 

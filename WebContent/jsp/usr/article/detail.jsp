@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
+
 <%
 	Article article = (Article) request.getAttribute("article");
 %>
@@ -19,7 +20,8 @@
         <a><%=article.title%></a>
       </div>
       <div class="body">
-      	<%=article.body %>
+      	<script type="text/x-template"><%=article.body%></script>
+  		 <div class="toast-ui-viewer"></div>
       </div>
      
     </div>

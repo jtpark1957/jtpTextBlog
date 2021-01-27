@@ -1,6 +1,7 @@
 package com.jtp.jtpTextBlog.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.dao.ArticleDao;
@@ -56,6 +57,10 @@ public class ArticleService {
 	public int delete(int id) {
 		return articleDao.delete(id);
 		
+	}
+
+	public int write(Map<String, Object> writeArgs) {
+		return articleDao.write(writeArgs);
 	}
 
 }
