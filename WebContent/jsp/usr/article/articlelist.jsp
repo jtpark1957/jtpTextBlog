@@ -6,6 +6,7 @@
 <%
 	List<Article> articles = (List<Article>) request.getAttribute("articles");
 	
+
 	int totalPage = (int) request.getAttribute("totalPage");
 	int paramPage = (int) request.getAttribute("page");
 	int boardId = (int) request.getAttribute("boardId");
@@ -77,8 +78,14 @@
 		
 		<select name="boardcode">
 			<option value="">전체</option>
-			<option value="notice">공지사항</option>
-			<option value="free">자유</option>
+			<%
+			
+			List<Board> boards = (List<Board>) request.getAttribute("boards");
+			for (Board board : boards) {
+				
+				%> <option value="<%=board.code%>"><%=board.name%></option> <%  
+			}
+			%>
 		</select> 
 		<select name="searchKeywordType">
 			<option value="title">제목</option>

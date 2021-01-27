@@ -4,7 +4,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
 <%
-/* System.out.println(session.getAttribute("loginedMemberId")); */
+Article article = (Article) request.getAttribute("article");
 %>
 <style>
 .te-ww-container {
@@ -14,6 +14,7 @@
 <script>
 	let DoWriteForm__submited = false;
 	let DoWriteForm__checkedLoginId = "";
+	//insertText
 	
 	// 폼 발송전 체크
 	function DoWriteForm__submit(form) {
@@ -48,12 +49,13 @@
 	}
 	</script>
 <div class="list">
-      <p>article write</p>
-  	<form action="doWrite" method="POST" onsubmit="DoWriteForm__submit(this); return false;">
+      <p>article modify</p>
+  	<form action="doModify" method="POST" onsubmit="DoWriteForm__submit(this); return false;">
   	<input type="hidden" name="body">
+  	<input type="hidden" name="id" value="<%=article.id%>" />
       <div class="ar">
         <div class="title">
-          <a class="w">게시글작성</a>
+          <a class="w">게시글수정</a>
           <a class="time"></a>
 	      <select name="boardcode">
 						<%
@@ -66,13 +68,13 @@
 			%>
 		</select> 
          </div>
-        <b><input autocomplete ="off" value="" type="text" name="title" style="width: 100%; padding: 5px 0px;"placeholder=""></b>
+        <b><input autocomplete ="off" value="<%=article.title %>" type="text" name="title" style="width: 100%; padding: 5px 0px;"placeholder=""></b>
       </div>
       <div class="body">
-     	 <script type="text/x-template"></script>
+     	 <script type="text/x-template"><%=article.body%></script>
 		<div class="toast-ui-editor"></div>
       </div>
-      <input type="submit" value="등록">
+      <input type="submit" value="수정">
     </form> 
   </div>
     

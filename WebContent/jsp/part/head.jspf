@@ -87,7 +87,9 @@ boolean dd = Container.session.isLogined();
 				<%if(dd== true)  {
 					session.setAttribute("loginedMemberId", Container.session.getLoginedMemberId()); %>
 				<a href="/s/doLogout" class=""><i class="itext">LOGOUT</i><i class="fas fa-lock"></i></a>
-				<%} else {%>
+				<%} else {
+					session.removeAttribute("loginedMemberId");
+				%>
 				<a href="/s/login" class=""><i class="itext">LOGIN</i><i class="fas fa-lock"></i></a>
 				<%}%>
 				 <a href="/s/articles" class=""><i class="itext">ARTICLES</i><i class="fas fa-file-alt"></i></a>
