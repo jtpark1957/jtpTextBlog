@@ -490,8 +490,17 @@ body {
 .search input[type="text"] {
   width: 25%;
   background-color: var(--whitesmoke);
+  border: 0 none;
   color: var(--black);
 }
+/* .articlewrite input {
+	border-radius: var(--radius);
+  border: 0 none;
+  padding: 5px ;
+   overflow: hidden;
+  white-space:nowrap
+	
+} */
 i,u {
   font-style: normal;
   font-weight: normal;

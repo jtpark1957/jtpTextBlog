@@ -111,11 +111,7 @@ public class MemberController extends Controller {
 		return "common/redirect";
 	}
 	public String doLogout(HttpServletRequest req, HttpServletResponse resp) {
-		if (Container.session.isLogined() == false) {
-			req.setAttribute("alertMsg","로그인 후 이용해주세요");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
+		
 		Container.session.logout();
 		req.setAttribute("alertMsg","");
 		req.setAttribute("replaceUrl", "/");

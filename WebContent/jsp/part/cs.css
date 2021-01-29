@@ -407,11 +407,11 @@ body {
   padding: 5px 10px;
   background-color: var(--whitesmoke);
   border-bottom: var(--white) 1px solid;
-  transition-duration: 0.5s;
+  /* transition-duration: 0.5s; */
 }
 
 .sidebar > .links a:hover {
-  background-color: var(--silver);
+  background-color: var(--white);
 }
 .sidebar > .links a i {
   padding-right: 12px;
@@ -489,8 +489,18 @@ body {
 }
 .search input[type="text"] {
   width: 25%;
-  
+  background-color: var(--whitesmoke);
+  border: 0 none;
+  color: var(--black);
 }
+/* .articlewrite input {
+	border-radius: var(--radius);
+  border: 0 none;
+  padding: 5px ;
+   overflow: hidden;
+  white-space:nowrap
+	
+} */
 i,u {
   font-style: normal;
   font-weight: normal;

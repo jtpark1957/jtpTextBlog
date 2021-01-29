@@ -41,7 +41,7 @@
 <!-- 토스트 UI 끝 -->
 
 <script src="/jsp/part/com.js" defer></script>
-<link rel="stylesheet" href="/jsp/part/app.css" />		
+<link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/part/cs.css" />		
 <script>
 	$(document).ready(function() {
 		var url = location.href;

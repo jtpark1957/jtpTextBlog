@@ -1,6 +1,8 @@
 package com.jtp.jtpTextBlog.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.controller.ArticleController;
@@ -31,9 +34,47 @@ public class DispatcherServlet extends HttpServlet {
 		
 
 		String controllerName = requestUriBits[2];
-		//System.out.println(requestUri + " ! !! " + controllerName);
+		System.out.println(requestUri + " ! !! " + controllerName);
 		MysqlUtil.setDBInfo("127.0.0.1", "jttpp", "123412", "textBoard");
+		// 데이터 추가 인터셉터 시작
+		boolean isLogined = false;
+		int loginedMemberId = 0;
+		
 
+		HttpSession session = req.getSession();
+
+		if (session.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		
+		}
+
+		req.setAttribute("isLogined", isLogined);
+		req.setAttribute("loginedMemberId", loginedMemberId);
+		
+
+		// 데이터 추가 인터셉터 끝
+
+		// 로그인 필요 필터링 인터셉터 시작
+
+		List<String> needToLoginActionUrls = new ArrayList<>();
+
+		needToLoginActionUrls.add("/s/doLogout");
+		needToLoginActionUrls.add("/s/write");
+		needToLoginActionUrls.add("/s/doWrite");
+		needToLoginActionUrls.add("/s/modify");
+		needToLoginActionUrls.add("/s/doModify");
+		needToLoginActionUrls.add("/s/doDelete");
+
+		if (needToLoginActionUrls.contains(requestUri)) {
+			if ((boolean) req.getAttribute("isLogined") == false) {
+				req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+				req.setAttribute("replaceUrl", "/s/login");
+
+				RequestDispatcher rd = req.getRequestDispatcher("/jsp/common/redirect.jsp");
+				rd.forward(req, resp);
+			}
+		}
 		String jspPath = null;
 		if (controllerName.equals("login")) {
 			MemberController memberController =Controller.memberController;

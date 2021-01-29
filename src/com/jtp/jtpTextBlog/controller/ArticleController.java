@@ -185,11 +185,7 @@ public class ArticleController extends Controller {
 	}
 	public String doDelete(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
-		if (session.getAttribute("loginedMemberId") == null) {
-			req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		} 
+	
 
 		int id = Integer.parseInt(req.getParameter("id"));
 
@@ -227,11 +223,7 @@ public class ArticleController extends Controller {
 	}
 	public String articleDoWrite(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
-		if (session.getAttribute("loginedMemberId") == null) {
-			req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
+
 		int memberId = (int) (session.getAttribute("loginedMemberId"));
 		String boardcode= req.getParameter("boardcode");
 		Board board = articleService.getBoardByCode(boardcode);
@@ -255,11 +247,6 @@ public class ArticleController extends Controller {
 	}
 	public String showModify(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
-		if (session.getAttribute("loginedMemberId") == null) {
-			req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		} 
 		int id = Integer.parseInt(req.getParameter("id"));
 
 		Article article = articleService.getForPrintArticleById(id);

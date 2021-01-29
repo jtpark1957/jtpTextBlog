@@ -7,8 +7,8 @@
 /* System.out.println(session.getAttribute("loginedMemberId")); */
 %>
 <style>
-.te-ww-container {
-	/* background-color:black; */
+.textbody {
+	width: 100%;
 }
 </style>
 <script>
@@ -54,7 +54,7 @@
 		DoWriteForm__submited = true;
 	}
 	</script>
-<div class="list">
+<div class="articlewrite">
       <p>article write</p>
   	<form action="doWrite" method="POST" onsubmit="DoWriteForm__submit(this); return false;">
   	<input type="hidden" name="body">
@@ -83,11 +83,11 @@
          </div>
         <b><input autocomplete ="off" value="" type="text" name="title" style="width: 100%; padding: 5px 0px;"placeholder=""></b>
       </div>
-      <div class="body">
+      <div class="textbody">
      	 <script type="text/x-template"></script>
 		<div class="toast-ui-editor"></div>
       </div>
-      <input type="submit" value="등록">
+      <input style="margin-top: 10px;"type="submit" value="등록">
     </form> 
   </div>
     

@@ -56,8 +56,8 @@ Article article = (Article) request.getAttribute("article");
       <div class="ar">
         <div class="title">
           <a class="w">게시글수정</a>
-          <a class="time"></a>
-	      <select name="boardcode">
+          <a class="time"><%=article.extra__boardName%></a>
+	 <%--      <select name="boardcode">
 						<%
 			
 			List<Board> boards = (List<Board>) request.getAttribute("boards");
@@ -66,14 +66,8 @@ Article article = (Article) request.getAttribute("article");
 				%> <option value="<%=board.id%>"><%=board.name%></option> <%  
 			} }
 			%>
-		</select> 
-	    <script>
-	      	const param__boardcode = '<%=article.boardId%>';
-
-		if ( param__boardcode ) {
-			$('select[name="boardcode"]').val(param__boardcode);
-		}
-	      </script>
+		</select>  --%>
+	 
          </div>
         <b><input autocomplete ="off" value="<%=article.title %>" type="text" name="title" style="width: 100%; padding: 5px 0px;"placeholder=""></b>
       </div>
@@ -81,7 +75,7 @@ Article article = (Article) request.getAttribute("article");
      	 <script type="text/x-template"><%=article.body%></script>
 		<div class="toast-ui-editor"></div>
       </div>
-      <input type="submit" value="수정">
+      <input style="margin-top: 10px;"type="submit" value="수정">
     </form> 
   </div>
     
