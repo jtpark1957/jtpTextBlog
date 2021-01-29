@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 <%
 %>
 <style>
@@ -46,6 +47,24 @@
 	color: red;
 	font-size: var(--small);
 }
+.reg {
+    margin-top: 10px;
+    display: flex;
+    float: left;
+}
+/* .reg a {
+  background-color: var(--whitesmoke);
+  color: var(--black);
+  border-radius: var(--radius);
+  border: solid 3px var(--black);
+  font-size: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 5px;
+ } */
+ .reg a:hover {
+ 	text-decoration:underline;
+ }
 </style>
 
 <div class="login">
@@ -74,6 +93,8 @@
 			
 			return;
 		}
+		form.loginPwReal.value = sha256(form.loginPw.value);
+		form.loginPw.value = "";
 		
 		form.submit();
 		DoLoginForm__submited = true;
@@ -86,6 +107,7 @@
 		<p>login</p>
 	</div>
 	<form action="doLogin" method="POST" onsubmit="DoLoginForm__submit(this); return false;">
+		<input type="hidden" name="loginPwReal" />
 		<div class="left">
 			<label for="id_loginId">Username or email</label> <input type="text"
 				name="loginId" id="id_loginId" value="">
@@ -93,6 +115,9 @@
 		<div class="right">
 			<label for="id_loginPw">Password</label> <input type="password"
 				name="loginPw" id="id_loginPw" value="">
+		</div>
+		<div class="reg">
+			<a href="/s/join"><i class="fas fa-user-plus"></i>register</a>
 		</div>
 		<%
 			String error = (String)session.getAttribute("errorMsg");

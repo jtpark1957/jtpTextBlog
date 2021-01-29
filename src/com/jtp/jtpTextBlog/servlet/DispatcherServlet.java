@@ -82,6 +82,12 @@ public class DispatcherServlet extends HttpServlet {
 		} else if (controllerName.equals("doLogin")) {
 			MemberController memberController =Controller.memberController;
 			jspPath = memberController.doLogin(req, resp);
+		} else if (controllerName.equals("join")) {
+			MemberController memberController =Controller.memberController;
+			jspPath = memberController.showJoin(req, resp);
+		} else if (controllerName.equals("doJoin")) {
+			MemberController memberController =Controller.memberController;
+			jspPath = memberController.doJoin(req, resp);
 		} else if (controllerName.equals("doLogout")) {
 			MemberController memberController =Controller.memberController;
 			jspPath = memberController.doLogout(req, resp);
@@ -108,6 +114,9 @@ public class DispatcherServlet extends HttpServlet {
 		} else if (controllerName.equals("doDelete")) {
 			ArticleController articleController =Controller.articleController;
 			jspPath = articleController.doDelete(req, resp);
+		} else if (controllerName.equals("getLoginIdDup")) { 
+			MemberController memberController =Controller.memberController;
+			jspPath = memberController.getLoginIdDup(req, resp);
 		}
 //		if (controllerName.equals("member")) {
 //			MemberController memberController = Container.memberController;

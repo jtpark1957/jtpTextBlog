@@ -1,5 +1,7 @@
 package com.jtp.jtpTextBlog.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +83,8 @@ public class MemberController extends Controller {
 			return "common/redirect";
 		}
 		String loginId = req.getParameter("loginId");
-		String loginPw = req.getParameter("loginPw");
+		String loginPw = req.getParameter("loginPwReal");
+		System.out.println(loginPw);
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
@@ -118,6 +121,45 @@ public class MemberController extends Controller {
 		HttpSession session = req.getSession();
 		session.removeAttribute("loginedMemberId");
 		return "common/redirect";
+	}
+	public String showJoin(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		return "usr/member/join";
+	}
+	public String doJoin(HttpServletRequest req, HttpServletResponse resp) {
+		String loginId = req.getParameter("loginId");
+		String loginPw = req.getParameter("loginPwReal");
+		String username = req.getParameter("username");
+		String email = req.getParameter("email");
+
+		Map<String, Object> joinArgs = new HashMap<>();
+		joinArgs.put("loginId", loginId);
+		joinArgs.put("loginPw", loginPw);
+		joinArgs.put("username", username);
+		joinArgs.put("email", email);
+
+		int newArticleId = memberService.join(joinArgs);
+
+		req.setAttribute("alertMsg", newArticleId + "번 회원이 생성되었습니다.");
+		req.setAttribute("replaceUrl", "join");
+		return "common/redirect";
+	}
+	public String getLoginIdDup(HttpServletRequest req, HttpServletResponse resp) {
+		String loginId = req.getParameter("loginId");
+
+		Member member = memberService.getMemberByLoginId(loginId);
+
+		String data = "";
+
+		if ( member != null ) {
+			data = "NO";
+		}
+		else {
+			data = "YES";
+		}
+
+		req.setAttribute("data", data);
+		return "common/pure";
 	}
 
 }
