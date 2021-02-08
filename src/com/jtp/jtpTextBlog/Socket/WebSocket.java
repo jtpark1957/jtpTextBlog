@@ -16,7 +16,8 @@ public class WebSocket {
 	@OnOpen
 	public void handleOpen() {
 		// 콘솔에 접속 로그를 출력한다.
-		MysqlUtil.setDBInfo("127.0.0.1", "jttpp", "123412", "textBoard");
+		//MysqlUtil.setDBInfo("127.0.0.1", "jttpp", "123412", "textBoard");
+		MysqlUtil.setDBInfo("15.165.189.13", "jttpp", "123412", "textBoard");
 		System.out.println("client is now connected...");
 	}
 

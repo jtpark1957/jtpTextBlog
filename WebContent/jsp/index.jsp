@@ -98,7 +98,7 @@
       	messageTextArea.value = '';
       	divTextArea.innerHTML = '';
       } if(message.value.indexOf("dark") > -1) {
-	      if($.cookie('dark').indexOf("Y") > -1) {
+	      if($.cookie('dark') && $.cookie('dark').indexOf("Y") > -1) {
 	      	$.cookie('dark', 'N', {path: '/' });
 	      } else {
 	      	$.cookie('dark', 'Y', {path: '/' });

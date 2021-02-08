@@ -33,6 +33,7 @@ public class MemberController extends Controller {
 		}
 
 		int loginedMemberId = Container.session.getLoginedMemberId();
+		
 		Member member = memberService.getMemberById(loginedMemberId);
 		
 		return(member.name+"님 환영합니다<br>");
@@ -84,7 +85,6 @@ public class MemberController extends Controller {
 		}
 		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPwReal");
-		System.out.println(loginPw);
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		

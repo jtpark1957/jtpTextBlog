@@ -1,5 +1,6 @@
 <%@ page import="java.util.List"%>
 <%@ page import="com.jtp.jtpTextBlog.container.Container"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -46,7 +47,8 @@
 	$(document).ready(function() {
 		var url = location.href;
 		console.log(url);
-		if($.cookie('dark').indexOf("Y") > -1) {
+		
+		if($.cookie('dark') && $.cookie('dark').indexOf("Y") > -1) {
 			document.documentElement.classList.toggle("dark")
 		}
 		
@@ -65,13 +67,17 @@
 </script>
 <%
 boolean dd = Container.session.isLogined();
-
-
+Object lobj_getdata = session.getAttribute("loginedMemberId");
+if(lobj_getdata == null) {
+	System.out.println("head.jspf"+"null!!");	
+}
+System.out.println("head.jspf"+lobj_getdata);
 %>
 <title>JTP WEB<%=dd%></title>
 
 </head>
 <body>
+
 	<div class="container">
 		<div class="leftside"></div>
 		<div class="sidebar">
@@ -84,11 +90,12 @@ boolean dd = Container.session.isLogined();
 			<div class="links">
 				<a href="/" class=""><i class="itext">HOME</i><i class="fas fa-home"></i></a>
 	
-				<%if(dd== true)  {
-					session.setAttribute("loginedMemberId", Container.session.getLoginedMemberId()); %>
+				<%if(lobj_getdata != null) {
+					/* session.setAttribute("loginedMemberId", Container.session.getLoginedMemberId()); */
+					%>
 				<a href="/s/doLogout" class=""><i class="itext">LOGOUT</i><i class="fas fa-lock"></i></a>
 				<%} else {
-					session.removeAttribute("loginedMemberId");
+					/* session.removeAttribute("loginedMemberId"); */
 				%>
 				<a href="/s/login" class=""><i class="itext">LOGIN</i><i class="fas fa-lock"></i></a>
 				<%}%>

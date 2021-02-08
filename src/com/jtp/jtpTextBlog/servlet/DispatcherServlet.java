@@ -35,7 +35,9 @@ public class DispatcherServlet extends HttpServlet {
 
 		String controllerName = requestUriBits[2];
 		System.out.println(requestUri + " ! !! " + controllerName);
-		MysqlUtil.setDBInfo("127.0.0.1", "jttpp", "123412", "textBoard");
+	//	MysqlUtil.setDBInfo("127.0.0.1", "jttpp", "123412", "textBoard");
+		MysqlUtil.setDBInfo("15.165.189.13", "jttpp", "123412", "textBoard");
+		//3.23.202.7
 		// 데이터 추가 인터셉터 시작
 		boolean isLogined = false;
 		int loginedMemberId = 0;
