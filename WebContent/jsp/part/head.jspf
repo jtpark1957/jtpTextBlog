@@ -46,7 +46,7 @@
 <script>
 	$(document).ready(function() {
 		var url = location.href;
-		console.log(url);
+		// console.log(url);
 		
 		if($.cookie('dark') && $.cookie('dark').indexOf("Y") > -1) {
 			document.documentElement.classList.toggle("dark")
@@ -66,14 +66,13 @@
 	});	
 </script>
 <%
-boolean dd = Container.session.isLogined();
 Object lobj_getdata = session.getAttribute("loginedMemberId");
 if(lobj_getdata == null) {
-	System.out.println("head.jspf"+"null!!");	
+	System.out.println("head.jspf"+"null!!");
 }
 System.out.println("head.jspf"+lobj_getdata);
 %>
-<title>JTP WEB<%=dd%></title>
+<title>JTP WEB<%=lobj_getdata%></title>
 
 </head>
 <body>

@@ -12,6 +12,7 @@ import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.dto.Member;
 import com.jtp.jtpTextBlog.service.ArticleService;
 import com.jtp.jtpTextBlog.service.MemberService;
+import com.jtp.jtpTextBlog.util.Util;
 
 public class MemberController extends Controller {
 	private MemberService memberService;
@@ -28,21 +29,22 @@ public class MemberController extends Controller {
 		return "";
 	}
 	private String helloWorld(String cmd) {
-		if (Container.session.isLogined() == false) {
+		
+		String input = cmd.split(" ")[2];
+		if (input.equals("null")) {
 			return "";
 		}
+		Member member = memberService.getMemberById(Integer.parseInt(input));
+		
+		System.out.println("helloworld" + member.name);
 
-		int loginedMemberId = Container.session.getLoginedMemberId();
-		
-		Member member = memberService.getMemberById(loginedMemberId);
-		
 		return(member.name+"님 환영합니다<br>");
 	}
 	private String doLogin(String cmd) {
 		System.out.println("== 로그인 ==");
-		if (Container.session.isLogined()) {
-			return("로그아웃 후 이용해주세요<br>");
-		}
+//		if (Container.session.isLogined()) {
+//			return("로그아웃 후 이용해주세요<br>");
+//		}
 		String cmdsp[] = cmd.split(" ");
 		String loginId = "";
 		String loginPw = "";
@@ -53,24 +55,15 @@ public class MemberController extends Controller {
 			
 		}
 		loginId = cmdsp[2];
-
-		Member member = memberService.getMemberByLoginId(loginId);
-
-		if (member == null) {
-			return("존재하지 않는 회원입니다.<br>");
-		}
-
-
+		
 		if (cmdsp.length <= 3) {
 			return("로그인비밀번호를 입력해주세요.<br>");
 		}
 		loginPw = cmdsp[3];
+		String shapw = Util.encryptSHA256(loginPw);
 
-		if (member.loginPw.equals(loginPw) == false) {
-			return("비밀번호가 일치하지 않습니다.<br>");
-		}
-		Container.session.login(member.id);
-		return("/");
+//		Container.session.login(member.id);
+		return("/s/doLogin?loginId="+ loginId +"&loginPwReal="+shapw);
 		//return(member.name+"님 환영합니다<br>");
 	}
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
@@ -78,8 +71,10 @@ public class MemberController extends Controller {
 		return "usr/member/login";
 	}
 	public String doLogin(HttpServletRequest req, HttpServletResponse resp) {
-		if (Container.session.isLogined()) {
-			req.setAttribute("alertMsg","로그아웃 후 이용해주세요");
+		HttpSession session = req.getSession();
+
+		if (session.getAttribute("loginedMemberId") != null) {
+			req.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
 			req.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
@@ -106,7 +101,6 @@ public class MemberController extends Controller {
 			return "common/redirect";
 		}
 
-		HttpSession session = req.getSession();
 		session.setAttribute("loginedMemberId", member.id);
 		Container.session.login(member.id);
 		req.setAttribute("alertMsg", "");

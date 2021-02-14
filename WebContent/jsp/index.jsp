@@ -59,22 +59,25 @@
 </div>
 
 <script type="text/javascript">	
-	
-      var webSocket = new WebSocket("ws://localhost:8083/websocket");
+	  var url = location.href;
+	  url = url.split('//');
+	  // console.log("index.jsp "+url[1]);
+      var webSocket = new WebSocket("ws://"+url[1]+"/websocket");
       	
-      var messageTextArea = document.getElementById("messageTextArea");	
       var divTextArea =  document.getElementById("divTextArea");
       webSocket.onopen = function(message) {	
-        messageTextArea.value += "Server connect...\n";	
-        divTextArea.innerHTML += "Server connect..."+"<br>";
-        sendMessage("hello world");	 
+        divTextArea.innerHTML += "Server connect..."+"<br>"; 
+        // Object lobj_getdata = session.getAttribute("loginedMemberId");
+        
+        
+        // console.log("<%=session.getAttribute("loginedMemberId")%>");
+        
+        sendMessage("hello world " + <%=session.getAttribute("loginedMemberId")%>, 0);	 
       };	
       webSocket.onclose = function(message) {	
-        messageTextArea.value += "Server Disconnect...\n";	
         divTextArea.innerHTML += "Server Disconnect...\n";	
       };	
       webSocket.onerror = function(message) {	
-        messageTextArea.value += "error...\n";	
         divTextArea.innerHTML += "error...\n";	
       };	
       webSocket.onmessage = function(message) {	
@@ -82,17 +85,21 @@
       	if(message.data.startsWith("/")) {
       		location.href=message.data;
       	
+      	} else {
+      		divTextArea.innerHTML += message.data;
       	} 
-        messageTextArea.value += message.data;	
-        divTextArea.innerHTML += message.data;	
+        	
       };	
-    function sendMessage(msg) {
+    function sendMessage(msg, vid) {
       var message = document.getElementById("textMessage");		
       if(msg != null) {
       	message.value += msg;
       }
-      messageTextArea.value += "cmd) "+message.value+"\n";	
-      divTextArea.innerHTML += "cmd) "+message.value+"<br>";
+      if(vid != 0) {
+      	divTextArea.innerHTML += "cmd) "+message.value+"<br>";
+      }
+      
+      
       webSocket.send(message.value);	
       if (message.value.indexOf("clear") > -1) { 
       	messageTextArea.value = '';
