@@ -1,4 +1,5 @@
 <%@page import="com.jtp.jtpTextBlog.dto.Article"%>
+<%@page import="com.jtp.jtpTextBlog.dto.Reply"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
@@ -15,6 +16,7 @@
 %>
 <style>
 .reply {
+	margin-top: 15px;
   position: relative;
   width: 100%;
   border: solid 2px var(--whitesmoke);
@@ -23,7 +25,7 @@
   border:none;
   resize: vertical;
   width:calc(98%); 
-  height:7vh;
+  height:5vh;
 }
 .reply label {
   /* display: block; */
@@ -36,6 +38,19 @@
   color:var(--black);
   height: auto;
   padding: 5px;
+}
+.replylist {
+  margin-bottom: 10px;
+  display:block;
+  font-size: 14px;
+   border-bottom: var(--whitesmoke) 2px solid;
+}
+.replylist .title {
+
+	padding-top: 5px;
+}
+.replylist .w {
+	font-weight: normal;
 }
 </style>
 <div class="list">
@@ -69,7 +84,7 @@
 		}
 			
 		form.reply_text.value = form.reply_text.value.trim();	
-		form.redirectUrl.value = 	
+		
 		if ( form.reply_text.value.length == 0 ) {
 			alert('내용을 입력해주세요.');
 			form.reply_text.focus();
@@ -82,6 +97,10 @@
 		Reply__DoWriteForm__submited = true;
 	}
 </script>
+<%
+List<Reply> replies = (List<Reply>) request.getAttribute("replies");
+%>
+
 	<div class="reply">
       <form action="replydoWrite" method="POST"
 			onsubmit="Reply__DoWriteForm__submit(this); return false;">
@@ -93,8 +112,22 @@
         <textarea wrap="hard" name="reply_text" id="reply_text" placeholder="댓글을 남겨주세요.."></textarea>
       </form>
     </div>
-     
-    </div>
+	<div class="rlist">
+		<%
+		for (Reply reply : replies) {
+		%>
+		<div class="replylist">
+			<div class="title">
+				<a class="w"><%=reply.extra__writer%> </a> <a class="time"><%=reply.regDate%></a>
+				<%-- <a class="board"><%=article.extra__boardName%> </a> --%>
+			</div>
+			<a class=""><%=reply.body%></a>
+		</div>
+		<%
+		}
+		%>
+	</div>
+</div>
     
   
 <%@ include file="/jsp/part/foot.jspf"%>

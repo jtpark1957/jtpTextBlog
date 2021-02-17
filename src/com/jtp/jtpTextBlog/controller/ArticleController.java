@@ -12,15 +12,19 @@ import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.dto.Article;
 import com.jtp.jtpTextBlog.dto.Board;
 import com.jtp.jtpTextBlog.dto.Member;
+import com.jtp.jtpTextBlog.dto.Reply;
 import com.jtp.jtpTextBlog.service.ArticleService;
 import com.jtp.jtpTextBlog.service.MemberService;
+import com.jtp.jtpTextBlog.service.ReplyService;
 
 public class ArticleController extends Controller {
 	private ArticleService articleService;
 	private MemberService memberService;
+	private ReplyService replyService;
 
 	public ArticleController() {
 		articleService = Container.articleService;
+		replyService = Container.replyService;
 		memberService = Container.memberService;
 		//memberService = new MemberService();
 	}
@@ -180,6 +184,8 @@ public class ArticleController extends Controller {
 		}
 
 		req.setAttribute("article", article);
+		List<Reply> replies = replyService.getForPrintReplies("article", article.id);
+		req.setAttribute("replies", replies);
 
 		return "usr/article/detail";
 	}
