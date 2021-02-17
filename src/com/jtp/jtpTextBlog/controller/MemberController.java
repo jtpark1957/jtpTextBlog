@@ -125,7 +125,12 @@ public class MemberController extends Controller {
 		String loginPw = req.getParameter("loginPwReal");
 		String username = req.getParameter("username");
 		String email = req.getParameter("email");
-
+		int jch = 1;
+		if(jch == 1) {
+			req.setAttribute("alertMsg", "현재 계정을 생성할 수 없습니");
+			req.setAttribute("replaceUrl", "/");
+			return "common/redirect";
+		}
 		Map<String, Object> joinArgs = new HashMap<>();
 		joinArgs.put("loginId", loginId);
 		joinArgs.put("loginPw", loginPw);

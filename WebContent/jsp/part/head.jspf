@@ -45,22 +45,17 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/part/cs.css" />		
 <script>
 	$(document).ready(function() {
-		var url = location.href;
+		var url = location.pathname;
 		// console.log(url);
-		
 		if($.cookie('dark') && $.cookie('dark').indexOf("Y") > -1) {
 			document.documentElement.classList.toggle("dark")
 		}
 		
-		var getAr0 = url.indexOf("/s/article");
-		var getAr1 = url.indexOf("/s/login");
-	    var getAr2 = url.indexOf("/");
-	    
-	    if(getAr0 != -1) {
+	    if(url === "/s/articles") {
 	        $(".sidebar .links a:nth-child(3)").addClass("on");
-	    } else if(getAr1 != -1) {
+	    } else if(url === "/s/login") {
 	        $(".sidebar .links a:nth-child(2)").addClass("on");
-	    } else if(getAr2 != -1) {
+	    } else if(url === "/") {
 	        $(".sidebar .links a:nth-child(1)").addClass("on");
 	    }
 	});	
@@ -92,7 +87,7 @@ System.out.println("head.jspf"+lobj_getdata);
 				<%if(lobj_getdata != null) {
 					/* session.setAttribute("loginedMemberId", Container.session.getLoginedMemberId()); */
 					%>
-				<a href="/s/doLogout" class=""><i class="itext">LOGOUT</i><i class="fas fa-lock"></i></a>
+				<a href="/s/doLogout" class=""><i class="itext">LOGOUT</i><i class="fas fa-unlock"></i></a>
 				<%} else {
 					/* session.removeAttribute("loginedMemberId"); */
 				%>

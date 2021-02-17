@@ -16,6 +16,7 @@ import com.jtp.jtpTextBlog.container.Container;
 import com.jtp.jtpTextBlog.controller.ArticleController;
 import com.jtp.jtpTextBlog.controller.Controller;
 import com.jtp.jtpTextBlog.controller.MemberController;
+import com.jtp.jtpTextBlog.controller.ReplyController;
 import com.sbs.example.mysqlutil.MysqlUtil;
 
 /**
@@ -67,6 +68,7 @@ public class DispatcherServlet extends HttpServlet {
 		needToLoginActionUrls.add("/s/modify");
 		needToLoginActionUrls.add("/s/doModify");
 		needToLoginActionUrls.add("/s/doDelete");
+		needToLoginActionUrls.add("/s/replydoWrite");
 
 		if (needToLoginActionUrls.contains(requestUri)) {
 			if ((boolean) req.getAttribute("isLogined") == false) {
@@ -120,20 +122,10 @@ public class DispatcherServlet extends HttpServlet {
 		} else if (controllerName.equals("getLoginIdDup")) { 
 			MemberController memberController =Controller.memberController;
 			jspPath = memberController.getLoginIdDup(req, resp);
-		}
-//		if (controllerName.equals("member")) {
-//			MemberController memberController = Container.memberController;
-//
-//			if (actionMethodName.equals("list")) {
-//				jspPath = memberController.showList(req, resp);
-//			}
-//		} else if (controllerName.equals("article")) {
-//			ArticleController articleController = Container.articleController;
-//
-//			if (actionMethodName.equals("list")) {
-//				jspPath = articleController.showList(req, resp);
-//			}
-//		}
+		} else if (controllerName.equals("replydoWrite")) { 
+			ReplyController replyController =Controller.replyController;
+			jspPath = replyController.doWrite(req, resp);
+		}  
 
 		MysqlUtil.closeConnection();
 
